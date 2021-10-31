@@ -1,2 +1,2 @@
 # Codeforces
-A collection of my Codeforces problem solutions.
+My solutions to Codeforces problems.
