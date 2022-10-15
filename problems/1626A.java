@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
-public class MinorReduction1626B {
+public class 1626A {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
@@ -14,20 +14,20 @@ public class MinorReduction1626B {
 
 		for (int i = 0; i < t; i++) {
 			String s = br.readLine();
-			String res = "";
-			boolean found = false;
-			for (int j = s.length() - 1; j > 0; j--) {
-				int sum = s.charAt(j) - 48 + s.charAt(j - 1) - 48;
-				if (sum > 9) {
-					found = true;
-					res = s.substring(0, j - 1) + sum + s.substring(j + 1, s.length());
-					break;
+			int[] flist = new int[26];
+			for (int j = 0; j < s.length(); j++) {
+				flist[s.charAt(j) - 97]++;
+			}
+			String ans = "";
+			for (int j = 0; j < 26; j++) {
+				char c = (char)(j + 97);
+				if (flist[j] == 1) {
+					ans = c + ans;
+				} else if (flist[j] == 2) {
+					ans = ans + c + c;
 				}
 			}
-			if (!found) {
-				res = s.charAt(0) - 48 + s.charAt(1) - 48 + s.substring(2, s.length());
-			}
-			pw.println(res);
+			pw.println(ans);
 		}
 
 		br.close();

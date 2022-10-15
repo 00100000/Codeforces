@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.StringTokenizer;
 
-public class DownloadMoreRAM1629A {
+public class 1629A {
 	static class Software {
 		int takes, gives;
 	}

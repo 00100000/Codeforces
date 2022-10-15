@@ -6,38 +6,47 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
-public class MEXAndArray1637B {
+public class 1609A {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
 
 		int t = Integer.parseInt(br.readLine());
-
 		for (int i = 0; i < t; i++) {
 			int n = Integer.parseInt(br.readLine());
-
-			int[] zeros = new int[n];
+			int twoPowers = 0;
+			int[] a = new int[n];
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			zeros[0] = Integer.parseInt(st.nextToken()) == 0 ? 1 : 0;
-			for (int j = 1; j < n; j++) {
-				zeros[j] = zeros[j - 1] + (Integer.parseInt(st.nextToken()) == 0 ? 1 : 0);
-			}
-			// all subsegments
-			int sum = 0;
 			for (int j = 0; j < n; j++) {
-				for (int k = j; k < n; k++) {
-					// best partition is all elements alone
-					// A zero adds +1 because the MEX is 1 and all other MEXes are 0
-					sum += k - j + 1;
-					sum += zeros[k];
-					if (j > 0) {
-						sum -= zeros[j - 1];
-					}
+				// find how many times a[j] is divisible by 2 before writing
+				// the odd left over to a[j]
+				int temp = Integer.parseInt(st.nextToken());
+				while (temp % 2 == 0) {
+					twoPowers++;
+					temp /= 2;
+				}
+				a[j] = temp;
+			}
+			// find largest odd left in a[]
+			int max = 0;
+			int maxIndex = -1;
+			for (int j = 0; j < n; j++) {
+				if (a[j] > max) {
+					max = a[j];
+					maxIndex = j;
+				}
+			}
+			// sum up odds and multiply largest odd by 2**twoPowers
+			long sum = 0;
+			for (int j = 0; j < n; j++) {
+				if (j == maxIndex) {
+					sum += a[j] * Math.pow(2, twoPowers);
+				} else {
+					sum += a[j];
 				}
 			}
 			pw.println(sum);
 		}
-
 		br.close();
 		pw.close();
 	}
